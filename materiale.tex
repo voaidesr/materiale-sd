@@ -9,6 +9,8 @@
 \usepackage{listings}
 \usepackage{xcolor}
 \usepackage{tikz}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 \usepackage{booktabs}
 \usepackage{enumitem}
 
@@ -144,6 +146,98 @@ Merge Sort divide recursiv vectorul în jumătăți până se obțin secvențe c
 \noindent
 Astfel, \(\Theta(f(n))\) indică creşterea „exactă” (în sens asimptotic), iar $O$ şi $\Omega$ doar conturul superior, respectiv inferior.
 
+% \section{Hash-uri și Tabele de Dispersie}
+% Secțiune complexă și completă în LaTeX pentru cursurile de Structuri de Date
+\section{Hash-uri și Tabele de Dispersie}
+\label{sec:hashuri}
+
+\subsection{Definiții și noțiuni introductive}
+\begin{definition}[Funcție de hash]
+O \emph{funcție de hash} este o funcție matematică
+$$h: \mathcal{U} \to \{0,1,\dots,m-1\},$$
+care transformă orice element din universul de chei $\mathcal{U}$ într-o valoare de dimensiune fixă. Rezultatul $h(x)$ se numește \emph{cod hash} al lui $x$. Funcția trebuie să fie eficient de calculat și să distribuie uniform cheile.
+\end{definition}
+
+\begin{itemize}
+  \item \textbf{Hash prin diviziune:} $h(x) = x \bmod p$, unde $p$ este un număr prim apropiat de $m$.
+  \item \textbf{Hash prin multiplicare:} Hash-ul prin multiplicare standard folosește formula
+\[
+  h_a(K) = \left\lfloor \frac{(aK \bmod W)}{W/M} \right\rfloor,
+\]
+care produce o valoare în \(\{0,\dots,M-1\}\). Parametrul \(a\) se alege coprim cu \(W\) și cu o reprezentare binară „aleatorie” a biților. În cazul special când \(W = 2^w\) și \(M = 2^m\), formula devine
+\[
+  h_a(K) = \left\lfloor \frac{(aK \bmod 2^w)}{2^{\,w-m}} \right\rfloor,
+\]
+  \item \textbf{Proprietate dorită:}\hspace{1em} ipoteza dispersiei uniforme simple, adică pentru orice chei distincte $x,y$ avem
+  $$\Pr[h(x)=h(y)] = \frac{1}{m}.$$
+\end{itemize}
+
+\subsection{Tabelă cu adresare directă}
+\label{subsec:adresare-directa}
+Pentru $N$ chei dintr-un univers mic $\{1,\dots,N\}$, putem implementa direct o tăblă de dispersie printr-un vector binar:
+\[
+  A[1\dots N], \quad A[i] = \begin{cases}1 & \text{dacă }i\text{ este prezent,} \\ 0 & \text{altfel.}\end{cases}
+\]
+Operații:
+\begin{itemize}
+  \item \texttt{insert(x)}: $A[x] \leftarrow 1$, cost $O(1)$.
+  \item \texttt{find(x)}: returnează $A[x]$, cost $O(1)$.
+  \item \texttt{delete(x)}: $A[x] \leftarrow 0$, cost $O(1)$.
+\end{itemize}
+
+\subsection{Tabele de dispersie cu coliziuni}
+\label{subsec:coliziuni}
+Pentru universuri mai mari sau chei arbitrare, folosim o funcție de hash $h$ și rezolvăm coliziunile prin:
+\begin{enumerate}
+  \item \textbf{Listă înlănțuită (chaining).}
+  \item \textbf{Adresare deschisă (open addressing).}
+\end{enumerate}
+
+\subsubsection{Chaining}
+Fie $T[0\dots m-1]$ un vector de liste înlănțuite. La inserare, adăugăm $x$ în lista $T[h(x)]$. Căutarea parcurge lista, cost amortizat $O(1 + \alpha)$, unde $\alpha = n/m$.
+
+\subsubsection{Adresare deschisă}
+Coliziunile se rezolvă prin sondaj:\\
+\begin{description}
+  \item[Lineară:] $h(x,i) = (h_0(x) + i) \bmod m$.
+  \item[Dublu hashing:] $h(x,i) = (h_1(x) + i\cdot h_2(x)) \bmod m$.
+\end{description}
+În cel mai rău caz, operațiile costă $O(m)$, dar dacă $\alpha < 1$ și funcțiile sunt bine alese, costul mediu este $O(1)$.
+
+\subsection{Dispersie universală}
+\label{subsec:dispersie-universala}
+\begin{definition}[Familie universală]
+O familie de funcții de dispersie $\mathcal{H}$ este \emph{universală} dacă pentru orice $x\neq y$ din $\mathcal{U}$,
+$$\bigl|\{h\in\mathcal{H} : h(x)=h(y)\}\bigr| = \frac{|\mathcal{H}|}{m}.$$
+\end{definition}
+Consecință: pentru $n\le m$ și $h$ ales aleator din $\mathcal{H}$, numărul mediu de coliziuni pentru o cheie fixă este mai mic decât 1.
+
+\subsection{Algoritmul Rabin--Karp pentru pattern matching}
+Pentru a găsi un șablon (pattern) $P$ de lungime $m$ într-un text $T$ de lungime $n$, folosim un hash pentru substring.
+\begin{itemize}
+  \item Alegem o bază $b$ (de obicei dimensiunea alfabetului) și un număr $M$.
+  \item Calculăm hash-ul pattern-ului (substringu-ului)
+  $$h_P = \sum_{i=0}^{m-1} P[i]\,b^{m-1-i} \bmod M.$$
+  \item Rolling hash-ul fiecărei ferestre de text de lungime $m$:
+  $$H_{0} = \sum_{i=0}^{m-1} T[i]\,b^{m-1-i} \bmod M,$$
+  $$H_{i+1} = \bigl(b\,(H_i - T[i]\,b^{m-1}) + T[i+m]\bigr) \bmod M.$$
+\end{itemize}
+Dacă $H_i = h_P$, facem o verificare explicită $T[i..i+m-1]=P$ pentru a evita \emph{false positives}. Complexitatea totală este $O(n+m)$ în medie.
+
+
+\subsection{Complexități}
+\begin{table}[H]
+\centering
+\begin{tabular}{l|ccc}
+\textbf{Structură} & \textbf{Insert} & \textbf{Find} & \textbf{Delete} \\
+\hline
+Directă & $O(1)$ & $O(1)$ & $O(1)$ \\
+Chaining & $O(1+\alpha)$ & $O(1+\alpha)$ & $O(1+\alpha)$ \\
+Open addressing & $O(1/(1-\alpha))$ & $O(1/(1-\alpha))$ & $O(1/(1-\alpha))$ \\
+\end{tabular}
+\caption{Complexități medii pentru tabele de dispersie}
+\label{tbl:complexitati}
+\end{table}
 
 
 
