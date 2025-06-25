@@ -13,6 +13,8 @@
 \usepackage{algpseudocode}
 \usepackage{booktabs}
 \usepackage{enumitem}
+\usepackage{array}
+\usepackage{float}
 
 % Theorem Environments
 \theoremstyle{definition}
@@ -239,6 +241,358 @@ Open addressing & $O(1/(1-\alpha))$ & $O(1/(1-\alpha))$ & $O(1/(1-\alpha))$ \\
 \label{tbl:complexitati}
 \end{table}
 
+\section {Structuri de date elementare}
+
+\subsection{Vectori si liste}
+Vectorii sunt structuri de date elementare. Vectorii se pot aloca static sau dinamic. Avem la dispozitie mai multe variante: vector static/dinamic din limbaj sau std::vector din STL sau std::array din STL (rar folosit).
+
+Exista liste de mai multe tipuri: inlantuite, dublu inlantuite, circulare, dublu inlantuire circulare. O lista consta dintr-o inlatuire de noduri, fiecare nod avand o valoare si un pointer catre alt nod.
+
+Comparison between lists and vectors:
+\begin{table}[h!]
+\centering
+
+\begin{tabular}
+{|>{\raggedright\arraybackslash}m{5cm}|c|c|}
+\hline
+\textbf{Operație} & \textbf{Liste} & \textbf{Array} \\
+\hline
+Inserare oriunde & În caz bun, \( O(1) \) & \( O(n) \) \\
+\hline
+Inserare/ștergere la capăt & \( O(1) \) & \( O(1) \) \\
+\hline
+Afișarea celui de-al k-lea element & \( O(k) \) & \( O(1) \) \\
+\hline
+Sortare & \( O(n \log n) \) & \( O(n \log n) \) \\
+\hline
+Căutare în structura sortată & \( O(n) \) & \( O(\log n) \) \\
+\hline
+Redimensionare & \( O(1) \) & \( O(n) \) \\
+\hline
+Join & \( O(1) \) & \( O(n) \) \\
+\hline
+\end{tabular}
+\caption{Complexitatea operațiilor pentru Liste și Array-uri}
+\end{table}
+
+\subsection{Stive}
+Stiva functioneaza dupa principiul \textbf{LIFO} (Last In First Out).
+Operatiile de baza intr-o stiva sunt: \textbf{push}, \textbf{pop}, \textbf{peek/top}.
+
+\textbf{Aplicatie:}
+Aplicatie de baza pentru stiva: skyline/ soldier's row/ trompeta. Problema cere sa determinam pentru fiecare indice $i$, indicele $j$ maxim, $j \in {0, 1, ..., i-1}$ astfel incat v[j] >= v[i]. 
+
+\textbf{Solutie:}
+Problema se rezolva folosind o stiva. Pentru fiecare element nou intrat in stiva, acesta scoate toate elementele mai mici decat el din stiva. La final in stiva vom obtine un sir crescator.
+
+\subsection{Cozi}
+Coada functioneaza dupa principiul \textbf{FIFO} (First In First Out). Operatiile de baza sunt: \textbf{push}, \textbf{pop}, \textbf{peek/top}.
+
+\textbf{Aplicatie:}
+O aplicatie clasica pentru coada este \textit{BFS} sau \textit{Algoritmul lui Lee} pentru drum minim pe matrice. 
+
+\textbf{Solutie:}
+Scoatem un element din coada si bagam in coada elementele vecine nevizitate. Continuam procesul pana cand coada este vida.
+
+\subsection{Deque}
+Deque-ul (Double Ended Queue) este o coada care permite inserarea si eliminarea elementelor atat dintr-un capat al cozii cat si din celalalt. Deque-ul combina conceptele de stiva si coada.
+
+Operatiile pe un deque sunt: \textbf{push-back, push-front, pop-back, pop-front, front, back}.
+
+\textbf{Aplicatie:}
+O aplicatie de baza pentru deque este min-max deque. Aceasta presupune determinarea maximului sau minimului pe un window de o lungime $k$ data.
+
+\textbf{Solutie:}
+Pe masura ce deplasam window-ul de la stanga la dreapta facem acelasi lucru ca la stiva (elementul nou intrat scoate toate elementele mai mici ca el), dar, eliminam si elemntul din stanga din coada daca am trecut de el.
+
+
+\section{Heapuri}
+Un heap de maxim este un \textit{arbore binar complet} cu proprietatea că fiecare nod este mai mare decât fiii săi.
+
+Un heap se poate reprezenta ca un vector astfel:
+$\text{Heap} = [50,\ 30,\ 40,\ 10,\ 20,\ 35,\ 25]$. Pentru o pozitie i avem: $2i$: fiul stang, $2i+1$: fiul drept si $[i/2]$: tatal.
+
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Operație} & \textbf{Timp Mediu} & \textbf{Cel mai rău caz} \\
+\hline
+Spațiu & O(n) & O(n) \\
+\hline
+Căutare & \textcolor{red}{O(n)} & \textcolor{red}{O(n)} \\
+\hline
+Inserare & O(1) & O(log n) \\
+ & n/2 * 0 + n/4 * 1 + n/8 * 2 ... ~= 1 & \\
+\hline
+Ștergere minim & O(log n) & O(log n) \\
+\hline
+Căutare minim & O(1) & O(1) \\
+\hline
+Construcție n elemente & O(n) & O(n) \\
+\hline
+Uniune & O(n) & O(n) \\
+(2 heapuri de n elemente) & & \\
+\hline
+\end{tabular}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{image2.png}
+    \caption{Urca}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{image.png}
+    \caption{Coboara}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\linewidth]{insert-minheap.png}
+    \caption{Insert in min-heap.}
+    \label{fig:enter-label}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{heap-delete-root.png}
+    \caption{Delete root of the heap.}
+    \label{fig:enter-label}
+\end{figure}
+
+Analog se procedeaza si pentru stergerea oricarui nod din heap. Se interschimba cu ultimul, iar apoi facem \textbf{ReheapDown}.
+
+\subsection*{Heapify}
+O alta problema este construirea unui heap. Aceasta poarta numele de \textit{heapify}. Complexitatea este O(n) si nu O(nlog(n)). Punem valorile in heap random. Pentru fiecare nod de la ultimul nivel in sus, facem \textbf{ReheapDown}.
+
+\textbf{Demonstratie complexitate O(n):}
+
+Pentru fiecare coborare vom avea $O(h)$ complexitate. Sunt aprox. $n/2$ frunze in heap. Pentru frunze nu avem ce cobori. Apoi, frunzele au $n/4$ noduri parinte pentru care facem maxim 1 opearatie de swap. Apoi, $n/8$ noduri pentru care facem maxim 2 operatii de swap. Generalizand, obtinem ca numarul de operatii pe care il facem este: 
+$$ 
+\sum \frac{n}{2^{i}}(i-1) = n \sum\frac{i-1}{2^{i}}
+$$
+
+Seria $\sum\frac{i-1}{2^{i}}$ converge la $1$, deci obtinem complexitate O(n).
+
+\subsection*{Merge Heaps}
+Deoarece operatia de merge este inceata, exista alte tipuri de heap-uri: \textit{binomiale} si \textit{fibonacci}.
+
+\setlength{\tabcolsep}{3pt} 
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+ & \textbf{Căutare Min} & \textbf{Ștergere Min} & \textbf{Inserare} & \textbf{Update} & \textbf{Reuniune} \\
+\hline
+Heap Binar & $\mathcal{O}(1)$ & $\mathcal{O}(\log N)$ & $\mathcal{O}(\log n)$ & $\mathcal{O}(\log n)$ & $\mathcal{O}(n)$ \\
+\hline
+Heap Binomial & $\mathcal{O}(1)$ & $\mathcal{O}(\log n)$ & $\mathcal{O}(1) \text{ (amortizat)}$ & $\mathcal{O}(\log n)$ & $\mathcal{O}(\log n)$ \\
+\hline
+Heap Fibonacci & $\mathcal{O}(1)$ & $\mathcal{O}(\log n) \text{ (amortizat)}$ & $\mathcal{O}(1)$ & $\mathcal{O}(1) \text{ (amortizat)}$ & $\mathcal{O}(1)$ \\
+\hline
+\end{tabular}
+
+\newpage
+
+\subsection{Heapuri Binomiale}
+\subsection*{Arbori binomiali}
+Un arbore binominal de ordin k:
+\begin{itemize}
+    \item Are exact $2^{k}$ noduri.
+    \item Inaltimea $k$
+    \item Sunt exact $C_{i}^{k}$ noduri de inaltime i.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\linewidth]{arbori-binomiali.png}
+    \caption{Arbori Binomiali}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Heapuri Binomiale}
+Un heap binomial este o familie de arbori binomiali care au proprietatea de heap minim. Există o singură structură de heap binomial pentru orice mărime.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{exemplu-heap-binomial.png}
+    \caption{Heap Binomial}
+    \label{fig:enter-label}
+\end{figure}
+
+Heap-ul din figura este un heap binomial cu 13 noduri($13 = 8 + 4 + 1$).
+
+\textbf{Extragerea minimului}: Vom avea minimul dintre toate radacinile arborilor binomiali (O(log(n)) complexitate) sau retinem minimul si il updatam la fiecare alta operatie (O(1) complexitate).
+
+\textbf{Merge}: Se face astfel: Parcurgem cele doua heap-uri binomiale si combinam arborii binomiali de acelasi rang. Cand obitnem un arbore binomial il putem folosi in reuniune cu alti arbori. Este ca o suma pe biti si pozitile bitilor setati din suma vor fi arborii binomiali pe care ii obtinem.Complexitate: O(log(n)).
+
+\textbf{Insert}: vom crea un arbore binomial de rang 1 cu un singur nod si vom da merge cu heap-ul initial. Complexitate: O(log(n)) (vine din merge).
+
+\textbf{Stergere minim}: Cand stergem, eliminam minimul, iar apoi facm reuniune. Complexitate: O(log(n)) (vine din merge).
+
+\subsection{Heapuri Fibonnaci}
+
+\begin{itemize}
+    \item Heapurile Fibonacci sunt o colecție de arbori care au proprietatea de ordonare de heap (arborii nu trebuie să fie binomiali).
+    \item Arborii dintr-un heap Fibonacci nu sunt ordonați.
+    \item Arborii din componență au mărimi \textbf{puteri ale lui 2}. Fiii vor fi arbori de mărime $1,…, k-1$, dar nu neapărat sortați de la stânga la dreapta.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{fibonacci-heap.png}
+    \caption{Fibonacci Heap}
+    \label{fig:enter-label}
+\end{figure}
+
+Structura unui heap fibonacci:
+\begin{itemize}
+    \item Listă dublu înlănțuită între rădăcini
+    \item Link către un fiu
+    \item Listă dublu înlănțuită între frați
+    \item Link către tată
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{fibonacci-heap2.png}
+    \caption{Fibonacci Heap Implementation}
+    \label{fig:enter-label}
+\end{figure}
+
+\textbf{Extragere minim}: retinem un pointer catre minim care il actualizam la fiecare operatie. Complexitate: O(1).
+
+\textbf{Inserare}: cream un nou arbore cu un singur element si il atasam heap-ului. Nu facem reuniune. Complexitate: O(1)
+
+\textbf{Merge}: concatenam lista de radacini ale primului heap la cel de-al doilea. Modificam pointer-ul catre minim.
+
+\textbf{Stergere minim}: Stergem minimul si ramanem cu doi arbori liberi (subarborii nodului sters). La extragerea minimului vom consolida heap-ul, adica se face reuniune similar cu heap-urile binomiale. \textbf{Consolidarea heap-ului}: Se calculeaza gradul unui arbore, ca fiind inaltimea arborelui si arborii cu acelasi grad se reunesc. 
+
+\subsection{Arbori Huffman}
+Codurile Huffman reprezintă o tehnică eficientă pentru compactarea datelor. Scopul este ca, pentru fiecare caracter, să alegem o metodă optimă pentru a o scrie în binar.
+
+\textbf{Constructia unui arbore Huffman}
+Luam frecventele caracterelor in ordine crescatoare. Unim de fiecare data cele mai mici 2 valori. Frecventa noului nod obtinut o bagam in lista si repetem procesul.
+
+Observatie: Arborii Huffman nu sunt unici!
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{huffman.png}
+    \caption{Arbori Huffman Exemplu}
+    \label{fig:enter-label}
+\end{figure}
+
+\section{Arbori binari de cautare echilibrati}
+
+Cautam modalitati de a mentine adancimea unui arbore cat mai apropiata de log(n).
+
+\textbf{Teorema 13.6.} Înălţimea medie a unui arbore binar de căutare construit aleator cu n chei distincte este O(lg n).
+
+\subsection{Red Black Trees}
+\begin{itemize}
+    \item Fiecare nod e ﬁe roșu, ﬁe negru
+    \item Rădăcina e mereu neagră
+    \item Nu putem avea două noduri adiacente roșii
+    \item Orice drum de la un nod la un descendent NULL are același număr de noduri negre
+\end{itemize}
+
+\subsection{AVL Trees}
+Pentru AVL-uri definim \textbf{factorul de echilibru} al unui nod: $BF(X) = h(subarbDrp(X)) - h(subarbStg(X))$, unde h este inaltimea unui arbore.
+
+Un arbore AVL este un arbore care are $BF(x) <= 1$, pentru orice nod $x$.
+
+Pentru rebalansarea arborelui se aplica rotatii: rotație stânga-stânga, rotație stânga-dreapta, rotație dreapta-stânga, rotație dreapta-dreapta.
+
+\section{Skip Lists}
+Sunt structuri de date echilibrate care ajuta la cautare rapida. Elementele \textbf{sunt sortate}.
+
+Structura:
+\begin{itemize}
+    \item Skip-listul este o lista inlatuita, dar extinsa pe mai multe nivele.
+    \item La ﬁecare nivel adăugat, sărim peste o serie de elemente față de nivelul anterior
+    \item Nivelele au legături între ele
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{skip-lists.png}
+    \caption{Skip List}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection*{Cautare}
+
+\begin{itemize}
+    \item Începem căutarea cu primul nivel (cel mai de sus) 2)
+    \item Avansăm în dreapta, până când, dacă am mai avansa, am merge prea departe (adică elementul următor este prea mare)
+    \item Ne mutăm în următoarea listă (mergem în jos)
+    \item Reluăm algoritmul de la pasul 2)
+    
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{skip-list-ex1.png}
+    \caption{Cautare elementul 22}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection*{Inserare}
+\begin{itemize}
+    \item Vrem să inserăm elementul x. Observație: Lista de jos trebuie să conțină toate elementele, deci căutăm locul lui x în lista de jos → search(x) si adaugam x in locul respectiv.
+    \item Cum alegem în ce altă listă să ﬁe adăugat?Alegem metoda probabilistică:
+    
+    \begin{itemize}
+        \item aruncăm o monedă
+        \item  dacă pică Stema - o adăugăm în lista următoare și aruncăm din nou moneda
+        \item dacă pică Banul - ne oprim
+    \end{itemize}
+\end{itemize}
+
+În medie vom aveae $\frac{1}{2}$ elemente nepromovate, $\frac{1}{4}$ elemente promovate 1 nivel, $\frac{1}{8}$ elemente promovate 2 nivele si tot asa.
+
+Deci, obtinem o complexitate O(log(n))
+
+\subsection*{Stergere}
+Stergem elementul x din toate listele in care se afla. Complexitate: O(log(n)).
+
+\section{Treap}
+Structură de date arborescentă care menține simultan proprietatea de arbore binar de căutare (BST) și cea de max-heap. 
+
+Puțin mai formal, fie $(X_{i}, Y_{i})$ nodurile arborelui. Treap-ul asigură structură de ABC pentru toți $X_i$, iar în $Y_i$, structura de max-heap.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{treap1.png}
+    \caption{Treap}
+    \label{fig:enter-label}
+\end{figure}
+
+De ce treapuri? Sunt usor de implementat. Cu puține modificări, permit abordarea multor tipuri de query-uri și update-uri (sume, cmmdc, rotații etc pe intervale).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{rotatii1.png}
+    \caption{Rotatii pe arbori}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection*{Inserare}
+La inserare, inseram exact ca intr-un BST obisnuit, iar dupa, pe recursie, rotim în sens invers subarborele cu rădăcina în nodul curent, în funcție de tipul fiului (stâng/drept).
+
+\subsection*{Cautare}
+Exact ca la un BST obisnuit.
+
+\subsection*{Stergere}
+Există trei cazuri în care se poate afla un nod pe care vrem să-l ștergem:
+
+\begin{itemize}
+    \item E frunză -> Îl ștergem direct.
+    \item Are numai un fiu -> Fiul ia locul nodului respectiv
+    \item Are doi fii -> Rotim în locul rădăcinii subarborelui făcut din nodul curent fiul cu prioritatea cea mai mare. Repetăm algoritmul până când ne aflăm în unul dintre primele două cazuri. 
+\end{itemize}
+
+\end{document}
 
 
 \end{document}
