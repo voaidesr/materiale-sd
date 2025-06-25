@@ -1,6 +1,6 @@
 # Resurse SD
 
-## Sortări
+## Sortări - Robert
 - [x] Count sort
 
 - [x] Radix sort
@@ -9,53 +9,53 @@
 
 - [ ] Merge sort
 
-## Cozi, stive, deque
+## Cozi, stive, deque - Petru
 - [ ] tabel complexități pg.12 curs
 - [ ] skyline, parantezări
 - [ ] min/max deque
 
-## Hashuri
+## Hashuri - Robert
 - [ ] inserare/căutare/ștergere
 - [ ] înlănțuire/adresare directă
 - [ ] funcții de dispersie (diviziune, multiplicare)
 - [ ] Rabin-Karp, rolling hash
 - [ ] 2 funcții șmechere de hash (MD5, etc)
 
-## Heapuri
+## Heapuri - Petru
 - [ ] Heapuri (operații și complexități)
 - [ ] Heapuri binomiale
 - [ ] Demonstrații de combinatorică
 - [ ] Heapuri Fibonacci
 
-## BST
+## BST - Robert
 - [ ] Inserare/căutare/ștergere
 - [ ] Predecesor/k-th element
 - [ ] Preordine, inordine, postordine
 
-## BST echilibrat
+## BST echilibrat - Petru
 - [ ] Skip lists
 - [ ] Treap (doar insert)
 - [ ] AVL, Red-Black - pe scurt
 
-## Arbori de intervale, Batog
+## Arbori de intervale, Batog - Robert
 - [ ] Inserare, căutare, ștergere, sortare
 - [ ] Sumă pe intervale, update pe intervale (lazy?)
 
-## RMQ
+## RMQ - Petru
 - [ ] vedem
 
-## LCA, LA
+## LCA, LA - Robert
 - [ ] vedem
 
-## Trie
+## Trie - Petru
 - [ ] vedem
 
 ## Seminarii
 
-### Seminar 1
-### Seminar 2
-### Seminar 3
-### Seminar 4
-### Seminar 5
-### Seminar 6
-### Seminar 7
+### Seminar 1 - Robert
+### Seminar 2 - Petru
+### Seminar 3 - Robert
+### Seminar 4 - Petru
+### Seminar 5 - Robert
+### Seminar 6 - Petru
+### Seminar 7 - Robert
