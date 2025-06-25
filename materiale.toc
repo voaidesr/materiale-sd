@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}Sortări}{2}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Clasificare}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Stabilitate}{2}{subsection.1.2}%
+\contentsline {subsection}{\numberline {1.3}Tabel de complexități}{2}{subsection.1.3}%
+\contentsline {subsection}{\numberline {1.4}Informații generale}{2}{subsection.1.4}%
+\contentsline {subsection}{\numberline {1.5}Counting sort}{3}{subsection.1.5}%
+\contentsline {subsection}{\numberline {1.6}Bucket sort}{3}{subsection.1.6}%
+\contentsline {subsection}{\numberline {1.7}Radix sort}{3}{subsection.1.7}%
+\contentsline {section}{\numberline {2}Complexități}{3}{section.2}%

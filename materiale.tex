@@ -1,0 +1,145 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+% Packages
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+% Theorem Environments
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+% Listings Configuration
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{gray},
+    stringstyle=\color{green!60!black},
+    showstringspaces=false,
+    breaklines=true,
+    frame=single,
+    captionpos=b,
+}
+
+% Document Information
+\title{Resurse examen SD}
+\author{Seria 15}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Sortări}
+Algoritmii de sortare pot fi clasificați după complexitate, spațiu, stabilitate și dacă se bazează pe comparații:
+
+\subsection{Clasificare}
+\begin{itemize}
+  \item \textbf{Elementari:} Insertion, Selection, Bubble
+  \item \textbf{Divide et Impera:} Merge Sort, Quick Sort
+  \item \textbf{Heap-based:} Heap Sort
+  \item \textbf{Non-comparative:} Counting Sort, Radix Sort, Bucket Sort
+\end{itemize}
+
+\subsection{Stabilitate}
+Un algoritm de sortare este \emph{stabil} dacă menține ordinea relativă a elementelor egale. Acest lucru este important când sortăm obiecte cu multiple chei.
+
+\subsection{Tabel de complexități}
+\begin{table}[h]
+  \centering
+  \begin{tabular}{l c c c c}
+    \toprule
+    \textbf{Algorithm}
+      & \multicolumn{3}{c}{\textbf{Time Complexity}}
+      & \textbf{Space (worst)} \\
+    \cmidrule(lr){2-4}
+      & \textbf{Best} & \textbf{Average} & \textbf{Worst} & \\
+    \midrule
+    Quicksort     & $\Omega(n\log n)$ & $\Theta(n\log n)$ & $O(n^2)$      & $O(\log n)$     \\
+    Mergesort     & $\Omega(n\log n)$ & $\Theta(n\log n)$ & $O(n\log n)$  & $O(n)$          \\
+    Timsort       & $\Omega(n)$       & $\Theta(n\log n)$ & $O(n\log n)$  & $O(n)$          \\
+    Heapsort      & $\Omega(n\log n)$ & $\Theta(n\log n)$ & $O(n\log n)$  & $O(1)$          \\
+    Bubble Sort   & $\Omega(n)$       & $\Theta(n^2)$     & $O(n^2)$      & $O(1)$          \\
+    Insertion Sort& $\Omega(n)$       & $\Theta(n^2)$     & $O(n^2)$      & $O(1)$          \\
+    Selection Sort& $\Omega(n^2)$     & $\Theta(n^2)$     & $O(n^2)$      & $O(1)$          \\
+    Tree Sort     & $\Omega(n\log n)$ & $\Theta(n\log n)$ & $O(n^2)$      & $O(n)$          \\
+    Shell Sort    & $\Omega(n\log n)$ & $\Theta\bigl(n(\log n)^2\bigr)$ & $O\bigl((n\log n)^2\bigr)$ & $O(1)$ \\
+    Bucket Sort   & $\Omega(n + k)$   & $\Theta(n + k)$   & $O(n^2)$      & $O(n + k)$      \\
+    Radix Sort    & $\Omega(n\,k)$    & $\Theta(n\,k)$    & $O(n\,k)$     & $O(n + k)$      \\
+    Counting Sort & $\Omega(n + k)$   & $\Theta(n + k)$   & $O(n + k)$    & $O(n + k)$      \\
+    Cubesort      & $\Omega(n)$       & $\Theta(n\log n)$ & $O(n\log n)$  & $O(n)$          \\
+    \bottomrule
+  \end{tabular}
+  \caption{Array Sorting Algorithms: time and space complexities}
+  \label{tab:sorting}
+\end{table}
+
+
+\subsection{Informații generale}
+\begin{itemize}
+  \item Sortările prin comparație au limită inferioară $\Omega(n\log n)$.
+  \item Algoritmii non-comparativi (Counting, Radix) pot ajunge la $O(n)$ în condiții favorabile.
+  \item Alegerea pivotului în Quick Sort influențează performanța:
+  \begin{itemize}
+    \item pivot ales random
+    \item mediana din 3/5/7
+    \item mediana medianelor
+  \end{itemize}
+  \item Pentru vectori mici, sortarea cu algoritmi $O(n^2)$ poate fi mai eficientă decât în $O(n\log n)$ (constanta poate fi mare).
+\end{itemize}
+
+\subsection{Counting sort}
+Se creează un vector de frecvență cu valorile pe care trebuie să le sortăm. Valorile din vector sunt numărate, iar vectorul este reconstruit în ordine
+sortată prin parcurgerea vectorului de frecvență.\\
+
+\noindent
+Se aplică când elementele sunt numere întregi într‐un interval \([0, k]\), (până la $10^6$)
+
+\subsection{Bucket sort}
+Se creează $k$ buckets și fiecare element $x$ din vectorul de intrare este distribuit în găleata indexată de o funcție de mapare (de ex.\ $\lfloor k\cdot\frac{x-a}{b-a}\rfloor$ pentru valori în $[a,b]$). Fiecare găleată este sortată intern (adesea prin Insertion Sort), apoi se concatenează conținutul găleților pentru a obține vectorul sortat.\\
+
+
+\subsection{Radix sort}
+Sortarea se face pe mai multe trepte de cifre: pentru fiecare poziție de cifră (de la LSD la MSD sau invers) se aplică Counting Sort pentru a grupa elementele după valoarea cifrei curente. După procesarea tuturor cifrelor, vectorul devine complet sortat.\\
+
+\section{Complexități}
+
+În studiul algoritmilor, folosim trei noțiuni fundamentale pentru a măsura creşterea funcţiei de timp \(T(n)\) în raport cu dimensiunea de intrare \(n\):
+
+\begin{itemize}
+  \item \(\mathbf{O}\) (Big-O): reprezintă o limită superioară asimptotică.
+    \[
+      T(n) = O(f(n)) \iff \exists\, c>0,\; n_0:\;\forall n\ge n_0,\; T(n)\le c\,f(n).
+    \]
+  \item \(\boldsymbol{\Omega}\) (Big-Omega): reprezintă o limită inferioară asimptotică.
+    \[
+      T(n) = \Omega(f(n)) \iff \exists\, c>0,\; n_0:\;\forall n\ge n_0,\; T(n)\ge c\,f(n).
+    \]
+  \item \(\boldsymbol{\Theta}\) (Big-Theta): când există simultan limite superioară și inferioară de același ordin.
+    \[
+      T(n) = \Theta(f(n)) \iff T(n) = O(f(n)) \;\wedge\; T(n) = \Omega(f(n)).
+    \]
+\end{itemize}
+
+\noindent
+Astfel, \(\Theta(f(n))\) indică creşterea „exactă” (în sens asimptotic), iar $O$ şi $\Omega$ doar conturul superior, respectiv inferior.
+
+
+
+
+\end{document}
