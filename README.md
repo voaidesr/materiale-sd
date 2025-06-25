@@ -22,11 +22,11 @@
 - [ ] 2 funcții șmechere de hash (MD5, etc)
 
 ## Heapuri - Petru
-- [ ] Heapuri (operații și complexități)
-- [ ] Heapuri binomiale
+- [x] Heapuri (operații și complexități)
+- [x] Heapuri binomiale
 - [ ] Demonstrații de combinatorică
-- [ ] Heapuri Fibonacci
-- [ ] Huffman
+- [x] Heapuri Fibonacci
+- [x] Huffman
 
 ## BST - Robert
 - [ ] Inserare/căutare/ștergere
@@ -34,9 +34,9 @@
 - [ ] Preordine, inordine, postordine
 
 ## BST echilibrat - Petru
-- [ ] Skip lists
-- [ ] Treap (doar insert)
-- [ ] AVL, Red-Black - pe scurt
+- [x] Skip lists
+- [x] Treap (doar insert)
+- [x] AVL, Red-Black - pe scurt
 
 ## Arbori de intervale, Batog - Robert
 - [ ] Inserare, căutare, ștergere, sortare
