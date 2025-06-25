@@ -15,10 +15,10 @@
 - [ ] min/max deque
 
 ## Hashuri - Robert
-- [ ] inserare/căutare/ștergere
-- [ ] înlănțuire/adresare directă
-- [ ] funcții de dispersie (diviziune, multiplicare)
-- [ ] Rabin-Karp, rolling hash
+- [x] inserare/căutare/ștergere
+- [x] înlănțuire/adresare directă
+- [x] funcții de dispersie (diviziune, multiplicare)
+- [x] Rabin-Karp, rolling hash
 - [ ] 2 funcții șmechere de hash (MD5, etc)
 
 ## Heapuri - Petru
