@@ -26,6 +26,7 @@
 - [ ] Heapuri binomiale
 - [ ] Demonstrații de combinatorică
 - [ ] Heapuri Fibonacci
+- [ ] Huffman
 
 ## BST - Robert
 - [ ] Inserare/căutare/ștergere
