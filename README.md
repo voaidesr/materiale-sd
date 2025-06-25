@@ -7,7 +7,7 @@
 
 - [x] Quick sort
 
-- [ ] Merge sort
+- [x] Merge sort
 
 ## Cozi, stive, deque - Petru
 - [ ] tabel complexități pg.12 curs

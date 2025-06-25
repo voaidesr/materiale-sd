@@ -113,9 +113,14 @@ Se aplică când elementele sunt numere întregi într‐un interval \([0, k]\),
 \subsection{Bucket sort}
 Se creează $k$ buckets și fiecare element $x$ din vectorul de intrare este distribuit în găleata indexată de o funcție de mapare (de ex.\ $\lfloor k\cdot\frac{x-a}{b-a}\rfloor$ pentru valori în $[a,b]$). Fiecare găleată este sortată intern (adesea prin Insertion Sort), apoi se concatenează conținutul găleților pentru a obține vectorul sortat.\\
 
-
 \subsection{Radix sort}
 Sortarea se face pe mai multe trepte de cifre: pentru fiecare poziție de cifră (de la LSD la MSD sau invers) se aplică Counting Sort pentru a grupa elementele după valoarea cifrei curente. După procesarea tuturor cifrelor, vectorul devine complet sortat.\\
+
+\subsection{Quicksort}
+Algoritmul Quick Sort folosește o abordare divide et impera: se selectează un pivot, iar vectorul este repartizat în două subsecțiuni, una cu elemente mai mici și cealaltă cu elemente mai mari decât pivotul. Se aplică recursiv același procedeu pe cele două subsecțiuni și, ulterior, se combină rezultatele pentru a obține vectorul sortat.\\
+
+\subsection{Mergesort}
+Merge Sort divide recursiv vectorul în jumătăți până se obțin secvențe cu un singur element (sau 2, depinde de implementare). Apoi, aceste secvențe sunt interclasate (merge) după ce au fost sortate, fiind combinate treptat pentru a forma vectorul sortat final.\\
 
 \section{Complexități}
 
