@@ -680,6 +680,25 @@ direcție
 numere aparițiile, dacă nu avem alte informații)
 \end{itemize}
 
+\subsection{Selectarea celui de-al \(k\)-lea element într-un BST}
+
+Pentru a putea regăsi rapid al \(k\)-lea element (în ordine crescătoare) într-un arbore binar de căutare, adaugăm la fiecare nod \(x\) cu un câmp suplimentar
+\[
+\mathit{size}(x) = \text{numărul de noduri din subarborele cu rădăcina în }x.
+\]
+După fiecare inserare sau ștergere, actualizăm aceste valori urcând de la frunză spre rădăcină.
+
+Pornind de la rădăcina arborelui, notăm prin \(m = \mathit{size}(x.\mathit{left})\) numărul de elemente din subarborele stâng al nodului curent \(x\). Pentru a găsi elementul de rang \(k\) (unde \(k=1\) corespunde celui mai mic element):
+
+\begin{itemize}
+  \item dacă \(k = m + 1\), atunci \(x\) însuși este al \(k\)-lea element;
+  \item dacă \(k \le m\), atunci al \(k\)-lea element se află în subarborele stâng;
+  \item altfel (adică \(k > m + 1\)), continuăm căutarea în subarborele drept, cu rangul ajustat la \(k - (m + 1)\).
+\end{itemize}
+
+În fiecare pas coborâm cu un singur nivel în arbore, deci complexitatea acestui procedeu este \(O(h)\), unde \(h\) este înălțimea arborelui.```
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Arbori binari de cautare echilibrati}
