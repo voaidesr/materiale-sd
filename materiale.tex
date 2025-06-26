@@ -280,7 +280,7 @@ Stiva functioneaza dupa principiul \textbf{LIFO} (Last In First Out).
 Operatiile de baza intr-o stiva sunt: \textbf{push}, \textbf{pop}, \textbf{peek/top}.
 
 \textbf{Aplicatie:}
-Aplicatie de baza pentru stiva: skyline/ soldier's row/ trompeta. Problema cere sa determinam pentru fiecare indice $i$, indicele $j$ maxim, $j \in {0, 1, ..., i-1}$ astfel incat v[j] >= v[i]. 
+Aplicatie de baza pentru stiva: skyline/ soldier's row/ trompeta. Problema cere sa determinam pentru fiecare indice $i$, indicele $j$ maxim, $j \in {0, 1, ..., i-1}$ astfel incat v[j] >= v[i].
 
 \textbf{Solutie:}
 Problema se rezolva folosind o stiva. Pentru fiecare element nou intrat in stiva, acesta scoate toate elementele mai mici decat el din stiva. La final in stiva vom obtine un sir crescator.
@@ -289,7 +289,7 @@ Problema se rezolva folosind o stiva. Pentru fiecare element nou intrat in stiva
 Coada functioneaza dupa principiul \textbf{FIFO} (First In First Out). Operatiile de baza sunt: \textbf{push}, \textbf{pop}, \textbf{peek/top}.
 
 \textbf{Aplicatie:}
-O aplicatie clasica pentru coada este \textit{BFS} sau \textit{Algoritmul lui Lee} pentru drum minim pe matrice. 
+O aplicatie clasica pentru coada este \textit{BFS} sau \textit{Algoritmul lui Lee} pentru drum minim pe matrice.
 
 \textbf{Solutie:}
 Scoatem un element din coada si bagam in coada elementele vecine nevizitate. Continuam procesul pana cand coada este vida.
@@ -369,8 +369,8 @@ O alta problema este construirea unui heap. Aceasta poarta numele de \textit{hea
 
 \textbf{Demonstratie complexitate O(n):}
 
-Pentru fiecare coborare vom avea $O(h)$ complexitate. Sunt aprox. $n/2$ frunze in heap. Pentru frunze nu avem ce cobori. Apoi, frunzele au $n/4$ noduri parinte pentru care facem maxim 1 opearatie de swap. Apoi, $n/8$ noduri pentru care facem maxim 2 operatii de swap. Generalizand, obtinem ca numarul de operatii pe care il facem este: 
-$$ 
+Pentru fiecare coborare vom avea $O(h)$ complexitate. Sunt aprox. $n/2$ frunze in heap. Pentru frunze nu avem ce cobori. Apoi, frunzele au $n/4$ noduri parinte pentru care facem maxim 1 opearatie de swap. Apoi, $n/8$ noduri pentru care facem maxim 2 operatii de swap. Generalizand, obtinem ca numarul de operatii pe care il facem este:
+$$
 \sum \frac{n}{2^{i}}(i-1) = n \sum\frac{i-1}{2^{i}}
 $$
 
@@ -379,7 +379,7 @@ Seria $\sum\frac{i-1}{2^{i}}$ converge la $1$, deci obtinem complexitate O(n).
 \subsection*{Merge Heaps}
 Deoarece operatia de merge este inceata, exista alte tipuri de heap-uri: \textit{binomiale} si \textit{fibonacci}.
 
-\setlength{\tabcolsep}{3pt} 
+\setlength{\tabcolsep}{3pt}
 \begin{tabular}{|l|c|c|c|c|c|}
 \hline
  & \textbf{Căutare Min} & \textbf{Ștergere Min} & \textbf{Inserare} & \textbf{Update} & \textbf{Reuniune} \\
@@ -465,7 +465,7 @@ Structura unui heap fibonacci:
 
 \textbf{Merge}: concatenam lista de radacini ale primului heap la cel de-al doilea. Modificam pointer-ul catre minim.
 
-\textbf{Stergere minim}: Stergem minimul si ramanem cu doi arbori liberi (subarborii nodului sters). La extragerea minimului vom consolida heap-ul, adica se face reuniune similar cu heap-urile binomiale. \textbf{Consolidarea heap-ului}: Se calculeaza gradul unui arbore, ca fiind inaltimea arborelui si arborii cu acelasi grad se reunesc. 
+\textbf{Stergere minim}: Stergem minimul si ramanem cu doi arbori liberi (subarborii nodului sters). La extragerea minimului vom consolida heap-ul, adica se face reuniune similar cu heap-urile binomiale. \textbf{Consolidarea heap-ului}: Se calculeaza gradul unui arbore, ca fiind inaltimea arborelui si arborii cu acelasi grad se reunesc.
 
 \subsection{Arbori Huffman}
 Codurile Huffman reprezintă o tehnică eficientă pentru compactarea datelor. Scopul este ca, pentru fiecare caracter, să alegem o metodă optimă pentru a o scrie în binar.
@@ -527,7 +527,7 @@ Structura:
     \item Avansăm în dreapta, până când, dacă am mai avansa, am merge prea departe (adică elementul următor este prea mare)
     \item Ne mutăm în următoarea listă (mergem în jos)
     \item Reluăm algoritmul de la pasul 2)
-    
+
 \end{itemize}
 
 \begin{figure}[H]
@@ -541,7 +541,7 @@ Structura:
 \begin{itemize}
     \item Vrem să inserăm elementul x. Observație: Lista de jos trebuie să conțină toate elementele, deci căutăm locul lui x în lista de jos → search(x) si adaugam x in locul respectiv.
     \item Cum alegem în ce altă listă să ﬁe adăugat?Alegem metoda probabilistică:
-    
+
     \begin{itemize}
         \item aruncăm o monedă
         \item  dacă pică Stema - o adăugăm în lista următoare și aruncăm din nou moneda
@@ -557,7 +557,7 @@ Deci, obtinem o complexitate O(log(n))
 Stergem elementul x din toate listele in care se afla. Complexitate: O(log(n)).
 
 \section{Treap}
-Structură de date arborescentă care menține simultan proprietatea de arbore binar de căutare (BST) și cea de max-heap. 
+Structură de date arborescentă care menține simultan proprietatea de arbore binar de căutare (BST) și cea de max-heap.
 
 Puțin mai formal, fie $(X_{i}, Y_{i})$ nodurile arborelui. Treap-ul asigură structură de ABC pentru toți $X_i$, iar în $Y_i$, structura de max-heap.
 
@@ -589,7 +589,7 @@ Există trei cazuri în care se poate afla un nod pe care vrem să-l ștergem:
 \begin{itemize}
     \item E frunză -> Îl ștergem direct.
     \item Are numai un fiu -> Fiul ia locul nodului respectiv
-    \item Are doi fii -> Rotim în locul rădăcinii subarborelui făcut din nodul curent fiul cu prioritatea cea mai mare. Repetăm algoritmul până când ne aflăm în unul dintre primele două cazuri. 
+    \item Are doi fii -> Rotim în locul rădăcinii subarborelui făcut din nodul curent fiul cu prioritatea cea mai mare. Repetăm algoritmul până când ne aflăm în unul dintre primele două cazuri.
 \end{itemize}
 
 \end{document}
