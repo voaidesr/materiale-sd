@@ -10,9 +10,9 @@
 - [x] Merge sort
 
 ## Cozi, stive, deque - Petru
-- [ ] tabel complexități pg.12 curs
-- [ ] skyline, parantezări
-- [ ] min/max deque
+- [x] tabel complexități pg.12 curs
+- [x] skyline, parantezări
+- [x] min/max deque
 
 ## Hashuri - Robert
 - [x] inserare/căutare/ștergere
@@ -29,9 +29,9 @@
 - [x] Huffman
 
 ## BST - Robert
-- [ ] Inserare/căutare/ștergere
-- [ ] Predecesor/k-th element
-- [ ] Preordine, inordine, postordine
+- [x] Inserare/căutare/ștergere
+- [x] Predecesor/k-th element
+- [x] Preordine, inordine, postordine
 
 ## BST echilibrat - Petru
 - [x] Skip lists
@@ -43,13 +43,13 @@
 - [ ] Sumă pe intervale, update pe intervale (lazy?)
 
 ## RMQ - Petru
-- [ ] vedem
+- [x] vedem
 
 ## LCA, LA - Robert
-- [ ] vedem
+- [x] vedem
 
 ## Trie - Petru
-- [ ] vedem
+- [x] vedem
 
 ## Seminarii
 

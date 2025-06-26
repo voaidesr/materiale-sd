@@ -25,6 +25,7 @@
 \newtheorem{corollary}[theorem]{Corollary}
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
+\newtheorem{exercise}{Exercise}[section]
 
 % Listings Configuration
 \lstset{
@@ -280,7 +281,7 @@ Stiva functioneaza dupa principiul \textbf{LIFO} (Last In First Out).
 Operatiile de baza intr-o stiva sunt: \textbf{push}, \textbf{pop}, \textbf{peek/top}.
 
 \textbf{Aplicatie:}
-Aplicatie de baza pentru stiva: skyline/ soldier's row/ trompeta. Problema cere sa determinam pentru fiecare indice $i$, indicele $j$ maxim, $j \in {0, 1, ..., i-1}$ astfel incat v[j] >= v[i]. 
+Aplicatie de baza pentru stiva: skyline/ soldier's row/ trompeta. Problema cere sa determinam pentru fiecare indice $i$, indicele $j$ maxim, $j \in {0, 1, ..., i-1}$ astfel incat v[j] >= v[i].
 
 \textbf{Solutie:}
 Problema se rezolva folosind o stiva. Pentru fiecare element nou intrat in stiva, acesta scoate toate elementele mai mici decat el din stiva. La final in stiva vom obtine un sir crescator.
@@ -289,7 +290,7 @@ Problema se rezolva folosind o stiva. Pentru fiecare element nou intrat in stiva
 Coada functioneaza dupa principiul \textbf{FIFO} (First In First Out). Operatiile de baza sunt: \textbf{push}, \textbf{pop}, \textbf{peek/top}.
 
 \textbf{Aplicatie:}
-O aplicatie clasica pentru coada este \textit{BFS} sau \textit{Algoritmul lui Lee} pentru drum minim pe matrice. 
+O aplicatie clasica pentru coada este \textit{BFS} sau \textit{Algoritmul lui Lee} pentru drum minim pe matrice.
 
 \textbf{Solutie:}
 Scoatem un element din coada si bagam in coada elementele vecine nevizitate. Continuam procesul pana cand coada este vida.
@@ -374,8 +375,8 @@ O alta problema este construirea unui heap. Aceasta poarta numele de \textit{hea
 
 \textbf{Demonstratie complexitate O(n):}
 
-Pentru fiecare coborare vom avea $O(h)$ complexitate. Sunt aprox. $n/2$ frunze in heap. Pentru frunze nu avem ce cobori. Apoi, frunzele au $n/4$ noduri parinte pentru care facem maxim 1 opearatie de swap. Apoi, $n/8$ noduri pentru care facem maxim 2 operatii de swap. Generalizand, obtinem ca numarul de operatii pe care il facem este: 
-$$ 
+Pentru fiecare coborare vom avea $O(h)$ complexitate. Sunt aprox. $n/2$ frunze in heap. Pentru frunze nu avem ce cobori. Apoi, frunzele au $n/4$ noduri parinte pentru care facem maxim 1 opearatie de swap. Apoi, $n/8$ noduri pentru care facem maxim 2 operatii de swap. Generalizand, obtinem ca numarul de operatii pe care il facem este:
+$$
 \sum \frac{n}{2^{i}}(i-1) = n \sum\frac{i-1}{2^{i}}
 $$
 
@@ -395,7 +396,7 @@ Deoarece operatia de merge este inceata, exista alte tipuri de heap-uri: \textit
 \newpage
 
 \bigskip
-\setlength{\tabcolsep}{2pt} 
+\setlength{\tabcolsep}{2pt}
 \begin{tabular}{|l|c|c|c|c|c|}
 \hline
  & \textbf{Căutare Min} & \textbf{Ștergere Min} & \textbf{Inserare} & \textbf{Update} & \textbf{Reuniune} \\
@@ -407,8 +408,6 @@ Heap Binomial & $\mathcal{O}(1)$ & $\mathcal{O}(\log n)$ & $\mathcal{O}(1) \text
 Heap Fibonacci & $\mathcal{O}(1)$ & $\mathcal{O}(\log n) \text{ (amortizat)}$ & $\mathcal{O}(1)$ & $\mathcal{O}(1) \text{ (amortizat)}$ & $\mathcal{O}(1)$ \\
 \hline
 \end{tabular}
-
-\newpage
 
 \subsection{Heapuri Binomiale}
 \subsection*{Arbori binomiali}
@@ -481,7 +480,7 @@ Structura unui heap fibonacci:
 
 \textbf{Merge}: concatenam lista de radacini ale primului heap la cel de-al doilea. Modificam pointer-ul catre minim. Complexitate: O(1).
 
-\textbf{Stergere minim}: Stergem minimul si ramanem cu doi arbori liberi (subarborii nodului sters). La extragerea minimului vom consolida heap-ul, adica se face reuniune similar cu heap-urile binomiale. \textbf{Consolidarea heap-ului}: Se calculeaza gradul unui arbore, ca fiind inaltimea arborelui si arborii cu acelasi grad se reunesc. 
+\textbf{Stergere minim}: Stergem minimul si ramanem cu doi arbori liberi (subarborii nodului sters). La extragerea minimului vom consolida heap-ul, adica se face reuniune similar cu heap-urile binomiale. \textbf{Consolidarea heap-ului}: Se calculeaza gradul unui arbore, ca fiind inaltimea arborelui si arborii cu acelasi grad se reunesc.
 
 \subsection{Arbori Huffman}
 Codurile Huffman reprezintă o tehnică eficientă pentru compactarea datelor. Scopul este ca, pentru fiecare caracter, să alegem o metodă optimă pentru a o scrie în binar.
@@ -497,6 +496,191 @@ Luam frecventele caracterelor in ordine crescatoare. Unim de fiecare data cele m
     \caption{Arbori Huffman Exemplu}
     \label{fig:enter-label}
 \end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%% BST Robert
+\section{Arbori binari de căutare}
+
+\subsection{Definiții arbori}
+
+\begin{definition}[\(k\)\nobreakdash-arbore]
+Un \emph{\(k\)\nobreakdash-arbore} \(T\) peste un tip de bază dat este definit recursiv după cum urmează:
+\begin{enumerate}
+  \item \(T\) este vid (notat \(T=\varnothing\)), sau
+  \item \(T\) constă dintr-un nod rădăcină \(\mathit{root}(T)\) de tipul de bază, împreună cu o secvență finită de subarbori disjuncți
+    \[
+      T_1, T_2, \dots, T_k,
+    \]
+    care sunt numiţi \emph{copiii} lui \(\mathit{root}(T)\).
+\end{enumerate}
+
+- k se numește \textbf{gradul arborelui}
+\end{definition}
+
+\begin{definition}[Arbore binar]
+  Un arbore binar este un 2-arbore.
+\end{definition}
+
+\begin{definition}[Înălțimea unui arbore]
+
+
+Fiecărui arbore îi asociem un nivel în felul următor
+\begin{itemize}
+  \item radacinii ii asociem nivelul 0
+  \item daca un nod se afla la nivelul $i$, ii asociem nivelul $i+1$
+\end{itemize}
+
+Inaltimea este nivelul maxim.
+\end{definition}
+
+\begin{definition}[Arbore plin]
+  Un arbore binar este plin dacă fiecare nod al său are 0 sau 2 fii.
+\end{definition}
+
+
+\begin{definition}[Arbore complet]
+  Un arbore binar este complet dacă toate nivelurile sunt complete, exceptând ultimul nivel care e completat de la stânga la dreapta.
+\end{definition}
+
+\subsection{Parcurgerea unui arbore binar}
+
+\begin{itemize}
+  \item \textbf{Preordine - RSD} - (radacina - stanga - dreapta)
+  \item \textbf{Inordine - SRD} - (stanga - radacina - dreapta)
+  \item \textbf{Postordine - SDR} - (stanga - dreapta - radacina)
+\end{itemize}
+
+\begin{exercise}[Reconstrucția arborelui din RSD și SRD]
+\textbf{Enunț.}
+Se dau două parcurgeri ale unui arbore binar cu noduri \(\{A,B,C,D,E,F\}\):
+\[
+\text{RSD (preordine): } A,\;B,\;D,\;E,\;C,\;F
+\quad\text{și}\quad
+\text{SRD (inordine): } D,\;B,\;E,\;A,\;C,\;F.
+\]
+Reconstruiți arborele și reprezentați-l grafic.
+
+\vspace{0.5em}
+\textbf{Idee.}
+1. În preordine primul nod este rădăcina: \(A\).
+2. În inordine separăm subarborele stâng \((D,B,E)\) de subarborele drept \((C,F)\).
+3. Pornind de la aceste două liste, repetăm recursiv pentru fiecare subarbore.
+
+\vspace{0.5em}
+\textbf{Rezolvare.}
+\begin{center}
+\begin{tikzpicture}[
+  level distance=1.2cm,
+  level 1/.style={sibling distance=3cm},
+  level 2/.style={sibling distance=1.5cm},
+  edge from parent/.style={draw,->},
+  every node/.style={circle,draw,inner sep=1pt}
+]
+  % Reconstruit din RSD=A B D E C F și SRD=D B E A C F
+  \node {A}
+    child { node {B}
+      child { node {D} }
+      child { node {E} }
+    }
+    child { node {C}
+      child[missing]
+      child { node {F} }
+    };
+\end{tikzpicture}
+\end{center}
+\end{exercise}
+
+\subsection{Arbori binari de căutare}
+
+Un ABC este un arbore binar care satisface următoarea condiție pentru fiecare nod x:
+
+\begin{itemize}
+  \item dacă y e un nod din \textbf{subarborele stang} al lui x atunci cheie[y] $\le$ cheie[x].
+  \item dacă y e un nod din \textbf{subarborele drept} al lui x atunci cheie[y] > cheie[x].
+\end{itemize}
+
+\begin{definition}[Arbore binar strict]
+  Un arbore binar \textbf{strict} e un arbore în care un nod fie nu are niciun fiu, fie are 2 fii.
+\end{definition}
+
+\noindent\textbf{Înălțimea arborelui}
+\begin{itemize}
+  \item Minim: Arbore binar complet - $\log n$
+  \item Maxim: Lanț - $n$.
+\end{itemize}
+
+\noindent\textbf{IMPORTANT} Pargurgerea \textbf{inordine} a unui ABC ne dă vectorul \textbf{sortat}.
+
+\subsection{Minim și maxim}
+Minimul se află în cel mai din stânga nod. Complexitate $O(h)$,  unde $h$ e înălțimea arborelui.\\
+
+\noindent Maximul se află în cel mai din dreapta nod. Complexitate $O(h)$.\\
+
+\noindent\textbf{Căutarea unui element}
+Începem din rădăcină și dacă valoarea din nodul curent este mai mică decât ceea
+ce căutăm, mergem în stânga, dacă valoarea e mai mare, mergem în dreapta.
+
+\subsection{Succesor și predecesor}
+
+Succesor = cea mai mică valoare din arbore, $\ge$ decât valoarea din nod\\
+Predecesor = cea mai mare valoare din arbore, $\le$ decât valoarea din nod\\
+
+ Pentru a găsi succesorul unui nod \(x\) într-un arbore binar de căutare, procedăm astfel: dacă \(x\) are subarbore drept, succesorul este nodul cel mai din stânga din acel subarbore (urmăm legăturile stângi până nu mai există); dacă nu, urcăm de la \(x\) spre rădăcină până întâlnim primul strămoș pentru care \(x\) se află în subarborele stâng – acel strămoș este succesorul.\\\\
+
+Analog, pentru predecesor: dacă \(x\) are subarbore stâng, predecesorul este nodul cel mai din dreapta din subarborele stâng; în caz contrar, urcăm spre părinți până găsim un strămoș pentru care \(x\) face parte din subarborele drept, iar acel strămoș este predecesorul.
+
+\subsection{Inserare și ștergere}
+
+\textbf{Inserare}
+\begin{itemize}
+  \item Similar cu căutarea.
+  \item Începem din rădăcină și avem următoarele cazuri:
+    \begin{itemize}
+      \item[$\square$] dacă valoarea dată este identică cu cheia rădăcinii, se renunță la inserare;
+      \item[$\square$] dacă valoarea dată este mai mică decât cheia rădăcinii, se continuă cu subarborele stâng;
+      \item[$\square$] dacă valoarea dată este mai mare decât cheia rădăcinii, se continuă cu subarborele drept;
+    \end{itemize}
+  \item Se continuă acest proces recursiv până când se ajunge la un nod fără copii, moment în care noul nod este inserat ca fiu al acestui nod.
+    \textbf{Obs.} După inserare, proprietatea de arbore binar de căutare trebuie să fie respectată.
+\end{itemize}
+
+
+
+\textbf{Ștergere}
+\begin{itemize}
+  \item Avem 3 cazuri:
+  \begin{enumerate}
+    \item Dacă nodul nu are fii, îl ștergem.
+    \item Dacă nodul are un singur fiu, îl ștergem și creăm o legătură directă între tată și noul fiu.
+    \item Dacă nodul are ambii fii, găsim succesorul, îl înlocuim pe nodul de șters și apoi eliminăm succesorul (care are cel mult un fiu).
+  \end{enumerate}
+\end{itemize}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{l c}
+\toprule
+\textbf{Operație} & \textbf{Complexitate} \\
+\midrule
+Căutare                & \(O(h)\) \\
+Găsire Minim           & \(O(h)\) \\
+Inserare               & \(O(h)\) \\
+Succesor / Predecesor   & \(O(h)\) \\
+Ștergere               & \(O(h)\) \\
+\bottomrule
+\end{tabular}
+\caption{Complexitatea operațiilor într-un BST de înălțime \(h\).}
+\end{table}
+
+\subsection{Arbori binari cu chei egale}
+
+\begin{itemize}
+  \item În caz de egalitate, alegem tot timpul stânga sau dreapta și inserăm în aceeași
+direcție
+  \item Ținem o listă cu toate elementele egale într-un singur nod (sau un contor care să
+numere aparițiile, dacă nu avem alte informații)
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Arbori binari de cautare echilibrati}
 
@@ -543,7 +727,7 @@ Structura:
     \item Avansăm în dreapta, până când, dacă am mai avansa, am merge prea departe (adică elementul următor este prea mare)
     \item Ne mutăm în următoarea listă (mergem în jos)
     \item Reluăm algoritmul de la pasul 2)
-    
+
 \end{itemize}
 
 \begin{figure}[H]
@@ -557,7 +741,7 @@ Structura:
 \begin{itemize}
     \item Vrem să inserăm elementul x. Observație: Lista de jos trebuie să conțină toate elementele, deci căutăm locul lui x în lista de jos → search(x) si adaugam x in locul respectiv.
     \item Cum alegem în ce altă listă să ﬁe adăugat?Alegem metoda probabilistică:
-    
+
     \begin{itemize}
         \item aruncăm o monedă
         \item  dacă pică Stema - o adăugăm în lista următoare și aruncăm din nou moneda
@@ -573,7 +757,7 @@ Deci, obtinem o complexitate O(log(n))
 Stergem elementul x din toate listele in care se afla. Complexitate: O(log(n)).
 
 \section{Treap}
-Structură de date arborescentă care menține simultan proprietatea de arbore binar de căutare (BST) și cea de max-heap. 
+Structură de date arborescentă care menține simultan proprietatea de arbore binar de căutare (BST) și cea de max-heap.
 
 Puțin mai formal, fie $(X_{i}, Y_{i})$ nodurile arborelui. Treap-ul asigură structură de ABC pentru toți $X_i$, iar în $Y_i$, structura de max-heap.
 
@@ -605,7 +789,7 @@ Există trei cazuri în care se poate afla un nod pe care vrem să-l ștergem:
 \begin{itemize}
     \item E frunză -> Îl ștergem direct.
     \item Are numai un fiu -> Fiul ia locul nodului respectiv
-    \item Are doi fii -> Rotim în locul rădăcinii subarborelui făcut din nodul curent fiul cu prioritatea cea mai mare. Repetăm algoritmul până când ne aflăm în unul dintre primele două cazuri. 
+    \item Are doi fii -> Rotim în locul rădăcinii subarborelui făcut din nodul curent fiul cu prioritatea cea mai mare. Repetăm algoritmul până când ne aflăm în unul dintre primele două cazuri.
 \end{itemize}
 
 
@@ -678,9 +862,9 @@ Având deja linia 0 cunoscută nu ne rămâne decât să calculăm valorile lini
 La fiecare interogare primim capetele unui interval, $[st, dr]$ care, evident, nu este neapărat de lungime putere de 2.
 
 Pentru a raspunde la query putem face o descompunere in baza 2 si obtinem O(log(n)). Dar, putem sa facem in O(1).
-Pentru acest lucru, să considerăm cea mai mare putere de 2 mai mică sau egală decât L (notăm cu len această valoare). 
+Pentru acest lucru, să considerăm cea mai mare putere de 2 mai mică sau egală decât L (notăm cu len această valoare).
 
-Acum să considerăm, intervalul de lungime len care începe la poziția st și pe cel de lungime len care se termină la poziția dr. 
+Acum să considerăm, intervalul de lungime len care începe la poziția st și pe cel de lungime len care se termină la poziția dr.
 
 Aceste doua intervale acopera complet intervalul nostru, deci putem face minimul / maximul lor si acesta este raspunsul la query.
 
@@ -785,7 +969,7 @@ Pornim din rădăcină și, la ﬁecare literă, mergem în nodul corespunzător
 
 \subsection*{Cautare}
 
-Cautarea unui cuvant din dictionar: 
+Cautarea unui cuvant din dictionar:
 \begin{itemize}
     \item Pornim din rădăcină și mergem, la ﬁecare pas, pe litera corespunzătoare.
     \item Complexitate $O(l)$ pentru căutare reușită.
