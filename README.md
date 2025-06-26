@@ -39,8 +39,8 @@
 - [x] AVL, Red-Black - pe scurt
 
 ## Arbori de intervale, Batog - Robert
-- [ ] Inserare, căutare, ștergere, sortare
-- [ ] Sumă pe intervale, update pe intervale (lazy?)
+- [x] Inserare, căutare, ștergere, sortare
+- [x] Sumă pe intervale, update pe intervale (lazy?)
 
 ## RMQ - Petru
 - [x] vedem

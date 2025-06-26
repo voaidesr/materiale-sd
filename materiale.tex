@@ -919,6 +919,155 @@ Există trei cazuri în care se poate afla un nod pe care vrem să-l ștergem:
     \item Are doi fii -> Rotim în locul rădăcinii subarborelui făcut din nodul curent fiul cu prioritatea cea mai mare. Repetăm algoritmul până când ne aflăm în unul dintre primele două cazuri.
 \end{itemize}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% AINT, BATOG
+\section{Arbore de intervale, Batog}
+\subsection*{Problema de tip \emph{Range Query / Point Update}}
+
+Se dă un vector \(A[0\ldots n-1]\) inițial cu valori numerice, iar apoi se efectuează două tipuri de operații:
+\begin{itemize}
+  \item \textbf{Point Update:} adaugă valoarea \(x\) la poziția \(i\), adică \(A[i]\mathrel{+}=x\).
+  \item \textbf{Range Query:} raportează maximul valorilor pe intervalul \([i, j]\), adică
+    \[
+      \max_{k=i}^{j} A[k].
+    \]
+\end{itemize}
+
+\noindent\textbf{Exemplu:}
+\[
+\begin{array}{c|ccccccccc}
+\text{index} & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 \\\hline
+A           & 3 & 9 & 2 & 5 & 7 & 34 & 6 & 11 & 8
+\end{array}
+\]
+
+\subsubsection*{Soluție prin decompoziție \emph{sqrt} (batog)}
+
+\paragraph{Ideea principală.}
+Împărțim tabloul \(A[0\ldots n-1]\) în blocuri de dimensiune aproximativă \(B=\lceil\sqrt n\rceil\). Pentru fiecare bloc \(b\) (care acoperă pozițiile \([bB\ldots \min((b+1)B-1,n-1)]\)) păstrăm în prealabil
+\[
+  M[b] = \max\{\,A[i]\colon i\in[bB,\,(b+1)B-1]\}.
+\]
+Astfel:
+\begin{itemize}
+  \item \textbf{Interogare \(\max(i,j)\).}
+    \begin{enumerate}
+      \item Parcurgem „capătul stâng”: de la \(i\) până la sfârșitul blocului lui \(i\), luând maximul direct din \(A\).
+      \item Parcurgem blocurile întregi complet incluse între blocul lui \(i\) și cel al lui \(j\), luând maximul dintre valorile \(M[b]\).
+      \item Parcurgem „capătul drept”: de la începutul blocului lui \(j\) până la poziția \(j\), din nou direct din \(A\).
+    \end{enumerate}
+    Complexitate: \(\;O(B + n/B) = O(\sqrt n)\).
+  \item \textbf{Actualizare „point update” \(A[p]\mathrel{+}=x\).}
+    Modificăm \(A[p]\) și apoi recalculeăm în \(O(B)\) noul maxim al blocului \(b=\lfloor p/B\rfloor\).
+    Complexitate: \(\;O(B)=O(\sqrt n)\).
+\end{itemize}
+
+\paragraph{Configurarea blocurilor și exemplu vizual}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.8,every node/.style={draw,minimum size=6mm,inner sep=1pt}]
+  % datele A[0..8] with increased horizontal spacing (factor 1.5)
+  \foreach \i/\v in {0/3,1/9,2/2,3/5,4/7,5/34,6/6,7/11,8/8}{
+    \node (a\i) at (1.5*\i,0) {\(\v\)};
+  }
+  % linii de separare pentru blocuri de B=3 (positions scaled by 1.5)
+  \draw[dashed] (4.5,-0.5) -- (4.5,0.5);
+  \draw[dashed] (9,-0.5) -- (9,0.5);
+  % etichete pentru blocuri
+  \node at (1.5,-1) {bloc 0};
+  \node at (6,-1) {bloc 1};
+  \node at (10.5,-1) {bloc 2};
+  % valorile M[b]
+  \node (m0) at (1.5,-2) {\(\max\{3,9,2\}=9\)};
+  \node (m1) at (6,-2) {\(\max\{5,7,34\}=34\)};
+  \node (m2) at (10.5,-2) {\(\max\{6,11,8\}=11\)};
+\end{tikzpicture}
+\end{center}
+\noindent Astfel, de exemplu \(\max(2,7)\) se obține prin:
+\[
+\max\Biggl\{
+\begin{array}{c}
+\max(A[2\ldots2]),\\[4ex]
+M[1],\\[4ex]
+\max(A[6\ldots7])
+\end{array}
+\Biggr\}
+=\max\{2,\;34,\;\max\{6,11\}\}=34.
+\]
+
+\subsection*{Arbori de intervale (Segment Trees)}
+
+Un arbore de intervale stochează agregări (sumă, minim, maxim etc.) pe subintervale ale unui vector \(A[0\ldots n-1]\). Structura este un arbore binar complet implicit, în care fiecare nod \(\nu\) corespunde unui interval \([L,R]\) din array.
+
+\begin{itemize}
+  \item \textbf{Structură şi memorie.}
+    Rădăcina reprezintă întregul interval \([0,n-1]\). Fiecare nod care acoperă \([L,R]\) are doi copii:
+    \[
+      \text{stânga}\to[L,M],\quad
+      \text{dreapta}\to[M+1,R],
+      \quad M = \lfloor (L+R)/2\rfloor.
+    \]
+    Toate frunzele sunt intervale unitare \([i,i]\).
+    Se alocă aproximativ \(4n\) noduri, deci spaţiul este \(O(n)\).
+
+  \item \textbf{Construire (build).}
+    Pornim de la rădăcină şi, dacă \(L=R\), setăm valoarea nodului la \(A[L]\). Altfel, construim recursiv copiii şi apoi calculăm valoarea părintelui ca
+    \(\mathrm{agg}(T[2\nu],T[2\nu+1])\)
+    (unde \(\mathrm{agg}\) poate fi \(\min\), \(\max\), sumă etc.).
+    Cost total: \(O(n)\).
+
+  \item \textbf{Interogare pe interval (query).}
+    Pentru a răspunde la o interogare \(\mathrm{agg}(A[i\ldots j])\), parcurgem arborele de la rădăcină:
+    \begin{enumerate}
+      \item Dacă intervalul nodului \([L,R]\) este complet în afara lui \([i,j]\), returnăm valoarea neutruă (ex: \(+\infty\) pentru minim, \(-\infty\) pentru maxim, \(0\) pentru sumă).
+      \item Dacă \([L,R]\subseteq[i,j]\), returnăm valoarea stocată la nod.
+      \item Altfel, combinăm rezultatele obținute recursiv din copiii stânga și dreapta prin \(\mathrm{agg}\).
+    \end{enumerate}
+    Fiecare interogare vizitează cel mult \(O(\log n)\) noduri, deci
+    \[
+      \text{complexitate query} = O(\log n).
+    \]
+
+  \item \textbf{Actualizare punctuală (point update).}
+    Pentru a modifica \(A[p]\leftarrow A[p]+x\) (sau înlocuirea cu o valoare nouă), coborâm din rădăcină până la frunza \([p,p]\), actualizăm valoarea şi urcăm recursiv actualizând fiecare părinte:
+    \[
+      T[\nu]\;=\;\mathrm{agg}(T[2\nu],\,T[2\nu+1]).
+    \]
+    Cost: \(O(\log n)\).
+
+  \item \textbf{Lazy propagation (actualizare pe interval).}
+    Pentru operaţii de tip \emph{range add} sau \emph{range assign}, introducem în fiecare nod un „marcaj” (\emph{lazy tag}) care păstrează actualizările întârziate ce trebuie propagate copiilor.
+    - Când un nod \(\nu\) este complet cuprins în intervalul de actualizare, aplicăm direct modificarea la \(T[\nu]\) şi stocăm marcajul în \(\mathrm{lazy}[\nu]\) fără a coborî imediat.
+    - La momentul interogării sau al necesităţii de a traversa copiii, propagăm marcajul de la \(\nu\) la cei doi copii, actualizând valorile lor şi marcajele corespunzătoare.
+    Astfel obținem:
+    \[
+      \text{complexitate query/update range} = O(\log n).
+    \]
+
+  \item \textbf{Aplicații și variații.}
+    \begin{itemize}
+      \item \emph{Range Sum Query (RSQ)}, \emph{Range Maximum Query (RMQ)}, \emph{Range GCD}, \emph{Range XOR} etc.
+      \item Segment tree bidimensional pentru probleme pe matrice.
+      \item \emph{Segment tree on array of vectors} pentru interogări de tip „count how many in \([i,j]\) lie in \([x,y]\)”.
+    \end{itemize}
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[level distance=1.2cm, level 1/.style={sibling distance=3cm}, level 2/.style={sibling distance=1.5cm}]
+  \node {\([0,n-1]\)}
+    child { node {\([0,m]\)}
+      child { node {\([0,\ell]\)} }
+      child { node {\([\ell+1,m]\)} }
+    }
+    child { node {\([m+1,n-1]\)}
+      child { node {\([m+1,k]\)} }
+      child { node {\([k+1,n-1]\)} }
+    };
+\end{tikzpicture}
+\end{center}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Range Minimum Query}
 Se dă un vector. Răspundeți cât mai eficient la întrebări de genul: Care este cel mai mic element din intervalul $(i, j)$?
