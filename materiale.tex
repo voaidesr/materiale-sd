@@ -1262,6 +1262,60 @@ Odată ce trie-ul este construit, sortarea în ordine lexicografică poate fi re
     \item La fiecare nivel, vizităm nodurile în ordinea alfabetică a literelor.
 \end{itemize}
 
+\section{Combinatorică random - tema 4 seminar}
+
+\subsection*{1. Numărul de BST cu \(n\) noduri}
+\[
+  C_n = \bigl|\{\text{BST-uri cu cheile }1,\dots,n\}\bigr|
+\]
+se obţine recurent ca
+\[
+  C_0 = 1,\quad
+  C_n = \sum_{i=0}^{n-1} C_i\,C_{n-1-i},
+\]
+şi are forma închisă
+\[
+  C_n \;=\; \frac1{\,n+1\,}\binom{2n}{n}\quad\text{(numărul \(n\)-\(\)Catalan).}
+\]
+
+\subsection*{2. Numărul de BST cu înălţimea exactă \(h\)}
+Fie
+\[
+  T(n,h)=\bigl|\{\text{BST cu \(n\) noduri şi înălțime }h\}\bigr|.
+\]
+Recurenţa se bazează pe poziţia rădăcinii \(x\) şi pe condiţia „cel puţin un subarbore are înălţimea \(h-1\)”:
+\[
+  T(n,h)
+  = \sum_{x=1}^n\Bigl(
+    T(x-1,h-1)\!\sum_{h'=0}^{h-1}T(n-x,h')
+    \;+\;
+    T(n-x,h-1)\!\sum_{h'=0}^{h-1}T(x-1,h')
+    \;-\;
+    T(x-1,h-1)\,T(n-x,h-1)\Bigr).
+\]
+Condiţii iniţiale: \(T(0,0)=1,\;T(1,0)=1,\;T(1,1)=0\).
+
+\subsection*{3. Numărul de heapuri pe \(n\) elemente}
+Fie \(H(n)\) numărul de heapuri binare complete pe cheile \(\{1,\dots,n\}\). Dacă nivelul maxim este \(h=\lfloor\log_2n\rfloor\), atunci
+\[
+  L = 2^{h-1}-1 + \min\bigl(n-(2^h-1),\,2^{h-1}\bigr),\quad
+  R = n-1-L,
+\]
+iar
+\[
+  H(n) \;=\;\binom{n-1}{L}\;H(L)\;H(R),
+\]
+cu \(H(0)=H(1)=1\). De exemplu \(H(7)=\binom{6}{3}H(3)H(3)=\binom{6}{3}\cdot2\cdot2=80\).
+
+\subsection*{4. Permutări sortabile cu o stivă}
+Numărul permutărilor ale \(\{1,\dots,n\}\) care pot fi generate printr-o stivă este tot
+\[
+  C_n = \frac1{n+1}\binom{2n}{n},
+\]
+adică al \(n\)-lea număr Catalan. Metoda de corespondenţă este clasică cu parantezări corecte.
+
+
+
 \end{document}
 
 
