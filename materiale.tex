@@ -310,8 +310,9 @@ Pe masura ce deplasam window-ul de la stanga la dreapta facem acelasi lucru ca l
 Un heap de maxim este un \textit{arbore binar complet} cu proprietatea că fiecare nod este mai mare decât fiii săi.
 
 Un heap se poate reprezenta ca un vector astfel:
-$\text{Heap} = [50,\ 30,\ 40,\ 10,\ 20,\ 35,\ 25]$. Pentru o pozitie i avem: $2i$: fiul stang, $2i+1$: fiul drept si $[i/2]$: tatal.
+$\text{Heap} = [50,\ 30,\ 40,\ 10,\ 20,\ 35,\ 25]$. Pentru o pozitie $i$ avem: $2i$: fiul stang, $2i+1$: fiul drept si $[i/2]$: tatal.
 
+\bigskip
 \begin{tabular}{|l|c|c|}
 \hline
 \textbf{Operație} & \textbf{Timp Mediu} & \textbf{Cel mai rău caz} \\
@@ -334,6 +335,7 @@ Uniune & O(n) & O(n) \\
 \hline
 \end{tabular}
 
+\subsection*{Urca/ Sift/ ReheapUp: }
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{image2.png}
@@ -341,6 +343,7 @@ Uniune & O(n) & O(n) \\
     \label{fig:enter-label}
 \end{figure}
 
+\subsection*{Coboara/ Percolate/ ReheapDown: }
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{image.png}
@@ -348,6 +351,7 @@ Uniune & O(n) & O(n) \\
     \label{fig:enter-label}
 \end{figure}
 
+\subsection*{Insert: }
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\linewidth]{insert-minheap.png}
@@ -355,6 +359,7 @@ Uniune & O(n) & O(n) \\
     \label{fig:enter-label}
 \end{figure}
 
+\subsection*{Delete: }
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.85\linewidth]{heap-delete-root.png}
@@ -376,10 +381,21 @@ $$
 
 Seria $\sum\frac{i-1}{2^{i}}$ converge la $1$, deci obtinem complexitate O(n).
 
+\subsection*{Combinatorica, Diverse}
+\textbf{Numărul minim de elemente dintr-un heap binar de înălțime k}? (Vom presupune că rădăcina heap-ului se află la înălțime 0) este: $2^k$.
+
+\bigskip
+
+\textbf{Se pot gasi elementele maxime / minime intr-un heap de minim / maxim?} Elementele respective se vor afla in frunze, deci trebuie sa parcurgem frunzele heap-ului (aprox. $n/2$ frunze). Asadar, se poate gasi maximul intr-un min-heap sau invers in complexitate O(n).
+
+
 \subsection*{Merge Heaps}
 Deoarece operatia de merge este inceata, exista alte tipuri de heap-uri: \textit{binomiale} si \textit{fibonacci}.
 
-\setlength{\tabcolsep}{3pt} 
+\newpage
+
+\bigskip
+\setlength{\tabcolsep}{2pt} 
 \begin{tabular}{|l|c|c|c|c|c|}
 \hline
  & \textbf{Căutare Min} & \textbf{Ștergere Min} & \textbf{Inserare} & \textbf{Update} & \textbf{Reuniune} \\
@@ -423,7 +439,7 @@ Heap-ul din figura este un heap binomial cu 13 noduri($13 = 8 + 4 + 1$).
 
 \textbf{Extragerea minimului}: Vom avea minimul dintre toate radacinile arborilor binomiali (O(log(n)) complexitate) sau retinem minimul si il updatam la fiecare alta operatie (O(1) complexitate).
 
-\textbf{Merge}: Se face astfel: Parcurgem cele doua heap-uri binomiale si combinam arborii binomiali de acelasi rang. Cand obitnem un arbore binomial il putem folosi in reuniune cu alti arbori. Este ca o suma pe biti si pozitile bitilor setati din suma vor fi arborii binomiali pe care ii obtinem.Complexitate: O(log(n)).
+\textbf{Merge}: Se face astfel: Parcurgem cele doua heap-uri binomiale si combinam arborii binomiali de acelasi rang. Cand obitnem un arbore binomial il putem folosi in reuniune cu alti arbori. Este ca o suma pe biti si pozitile bitilor setati din suma vor fi arborii binomiali pe care ii obtinem.Complexitate: O(log(m+n)).
 
 \textbf{Insert}: vom crea un arbore binomial de rang 1 cu un singur nod si vom da merge cu heap-ul initial. Complexitate: O(log(n)) (vine din merge).
 
@@ -432,7 +448,7 @@ Heap-ul din figura este un heap binomial cu 13 noduri($13 = 8 + 4 + 1$).
 \subsection{Heapuri Fibonnaci}
 
 \begin{itemize}
-    \item Heapurile Fibonacci sunt o colecție de arbori care au proprietatea de ordonare de heap (arborii nu trebuie să fie binomiali).
+    \item Heapurile Fibonacci sunt o colecție de arbori care au proprietatea de ordonare de heap (arborii nu trebuie să fie binomiali). \textbf{Putem avea si arbori de aceeasi dimesniune in heap.}
     \item Arborii dintr-un heap Fibonacci nu sunt ordonați.
     \item Arborii din componență au mărimi \textbf{puteri ale lui 2}. Fiii vor fi arbori de mărime $1,…, k-1$, dar nu neapărat sortați de la stânga la dreapta.
 \end{itemize}
@@ -463,7 +479,7 @@ Structura unui heap fibonacci:
 
 \textbf{Inserare}: cream un nou arbore cu un singur element si il atasam heap-ului. Nu facem reuniune. Complexitate: O(1)
 
-\textbf{Merge}: concatenam lista de radacini ale primului heap la cel de-al doilea. Modificam pointer-ul catre minim.
+\textbf{Merge}: concatenam lista de radacini ale primului heap la cel de-al doilea. Modificam pointer-ul catre minim. Complexitate: O(1).
 
 \textbf{Stergere minim}: Stergem minimul si ramanem cu doi arbori liberi (subarborii nodului sters). La extragerea minimului vom consolida heap-ul, adica se face reuniune similar cu heap-urile binomiale. \textbf{Consolidarea heap-ului}: Se calculeaza gradul unui arbore, ca fiind inaltimea arborelui si arborii cu acelasi grad se reunesc. 
 
@@ -473,7 +489,7 @@ Codurile Huffman reprezintă o tehnică eficientă pentru compactarea datelor. S
 \textbf{Constructia unui arbore Huffman}
 Luam frecventele caracterelor in ordine crescatoare. Unim de fiecare data cele mai mici 2 valori. Frecventa noului nod obtinut o bagam in lista si repetem procesul.
 
-Observatie: Arborii Huffman nu sunt unici!
+\textbf{Observatie: Arborii Huffman nu sunt unici!}
 
 \begin{figure}[H]
     \centering
@@ -592,7 +608,202 @@ Există trei cazuri în care se poate afla un nod pe care vrem să-l ștergem:
     \item Are doi fii -> Rotim în locul rădăcinii subarborelui făcut din nodul curent fiul cu prioritatea cea mai mare. Repetăm algoritmul până când ne aflăm în unul dintre primele două cazuri. 
 \end{itemize}
 
+
+\section{Range Minimum Query}
+Se dă un vector. Răspundeți cât mai eficient la întrebări de genul: Care este cel mai mic element din intervalul $(i, j)$?
+
+\begin{table}[h!]
+\centering
+\label{tab:ds_comparison}
+\begin{tabular}{lcccc}
+    \toprule
+    \textbf{Operation} & \textbf{Segment Tree} & \textbf{RMQ} & \textbf{Batog(sqrt)} \\
+    \midrule
+    \textbf{Build} & $\mathcal{O}(n)$ & $\mathcal{O}(n \log n)$ & $\mathcal{O}(n)$ \\
+    \textbf{Query} & $\mathcal{O}(\log n)$ & $\mathcal{O}(1)$ & $\mathcal{O}(\sqrt{n})$  \\
+    \textbf{Point Update} & $\mathcal{O}(\log n)$ & N/A (not supported) & $\mathcal{O}(1)$ \\
+    \bottomrule
+\end{tabular}
+\caption{Comparison of Segment Tree, Sparse Table (RMQ) Complexities and Sqrt Decomposition(Batog)}
+\end{table}
+
+\textbf{Atentie}: RMQ se preteaza pentru situatia in care nu avem update-uri. Altfel, daca exista update-uri, folosim un arbore de intervale sau batog.
+
+Exemplu:
+
+\bigskip
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10\\
+\hline
+4 & 2 & 7 & 8 & 3 & 5 & 9 & 1 & 6 & 2 & 9 \\
+\hline
+\end{tabular}
+\bigskip
+
+Minimul pe (0,3) este 2. Minimul pe (5,9) este 2.
+
+Pentru fiecare poziție i din v, vom calcula mai multe minime. Pentru fiecarte secvență de lungime putere de 2 care începe la poziția i, vom calcula minimul dintre elementele ei.
+
+Deci, pentru fiecare poziție din v vom avea maxim log(n) minime de calculat (atâtea puteri de 2 sunt mai mici sau egale decât n).
+
+\textbf{Astfel, vom obține o matrice r[p][i] = minimul din v pentru elementele dintr-o secvență de lungime $2^p$ care începe la poziția i.}
+
+\bigskip
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+v: & 4 & 2 & 7 & 8 & 3 & 5 & 9 & 1 & 6 & 2 & 9 \\
+\hline
+r: & & & & & & & & & & & \\
+\hline
+$2^0$ & 4 & 2 & 7 & 8 & 3 & 5 & 9 & 1 & 6 & 2 & 9 \\
+\hline
+$2^1$ & 2 & 2 & 7 & 3 & 3 & 5 & 1 & 1 & 6 & 2 & 9 \\
+\hline
+$2^2$ & 2 & 2 & 3 & 3 & 1 & 1 & 1 & 1 & 2 & 2 & 9 \\
+\hline
+$2^3$ & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 2 & 2 & 9 \\
+\hline
+\end{tabular}
+\bigskip
+
+\subsection*{Constructie}
+Un element de pe linia p se calculează ca minimul a două elemente de pe linia $p-1$:
+$$r[p][i] = min (r[p-1][i], r[p-1][i+2
+p-1]).$$
+
+Având deja linia 0 cunoscută nu ne rămâne decât să calculăm valorile linie cu linie, în ordinea crescătoare a indicilor de linii.
+
+\subsection*{Query}
+La fiecare interogare primim capetele unui interval, $[st, dr]$ care, evident, nu este neapărat de lungime putere de 2.
+
+Pentru a raspunde la query putem face o descompunere in baza 2 si obtinem O(log(n)). Dar, putem sa facem in O(1).
+Pentru acest lucru, să considerăm cea mai mare putere de 2 mai mică sau egală decât L (notăm cu len această valoare). 
+
+Acum să considerăm, intervalul de lungime len care începe la poziția st și pe cel de lungime len care se termină la poziția dr. 
+
+Aceste doua intervale acopera complet intervalul nostru, deci putem face minimul / maximul lor si acesta este raspunsul la query.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{rmq.png}
+    \caption{RMQ Query}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection{Lowest Ancestor (LA)}
+Se dă un arbore. Răspundeți cât mai eficient la întrebări de genul: Se dă un nod și un întreg k. Care este strămoșul de nivel k al nodului dat?
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\linewidth]{lca-tree.png}
+    \caption{Tree Example}
+    \label{fig:enter-label}
+\end{figure}
+
+$$LA(2,1) = 1, LA(9,1) = 6, LA(9,2) = 2, LA(6,4) = -1$$
+
+Mai multe rezolvari posibile:
+\begin{itemize}
+    \item Parcurg din tata in tata. Complexitate: $O(n)$ pe query si $O(1)$ memorie.
+    \item Retin un map unde stiu toti stramosii nodurilor. Preprocesare si memorie: $O(n \cdot h)$ si $O(1)$ pe query.
+    \item Sqrt Decomposition (Batog). Țin pointer catre tatăl de ordin radical din n. Obtinem $O(n)$ memorie suplimentara si $O(\sqrt{n})$ pe query.
+
+    \item \textbf{Binary Lifting:} Pentru fiecare nod, țin tații de înălțime $1, 2, 4, 8, 16, …$. La query facem similar cu cautarea binara. Sarim cu cea mai mare putere de 2 posibila.Complexitate $O(n \cdot log(n))$ preprocesoare, $O(n\cdot log(n))$ memorie suplimentară si $O(log(n))$ pe query.
+\end{itemize}
+
+\subsection{Lowest Common Ancestor (LCA)}
+Răspundeți cât mai eficient la întrebări de genul: Se dau două noduri într-un arbore. Găsiți cel mai apropiat strămoș comun.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.45\linewidth]{lca-tree.png}
+    \caption{Tree Example}
+    \label{fig:enter-label}
+\end{figure}
+
+$$LCA(4,9) = 2, LCA(4,11) = 1, LCA(7,6) = 2$$
+
+Una dintre aplicatiile \textbf{structurii RMQ} este determinarea LCA-ului.
+
+
+\begin{itemize}
+    \item \textbf{Liniarizam arobrele printr-o parcurgere Euler}: Începem o parcurgere RSD din rădăcină și scriem fiecare nod de fiecare dată când trecem prin el.
+    \item Pentru fiecare nod, reținem și distanța de la el la rădăcină.
+    \item Pentru fiecare nod, reținem și prima sa apariție în parcurgerea Euler.
+    \item $LCA(i,j) = RMQ(first[i], first[j])$. Unde RMQ calculeaza minimul pe vectorul de distante pana la radacina.
+    \item Acum putem raspunde la query-uri $LCA(x,y)$ in $O(1)$.
+\end{itemize}
+
+\textbf{Complexitate:  $O(nlog(n) + q)$}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{lca-euler-tour.png}
+    \caption{Euler Tour}
+    \label{fig:enter-label}
+\end{figure}
+
+\section{Trie (Prefix Tree)}
+\textbf{Problema:} Am mai multe cuvinte pe care le tin minte și apoi am întrebări de genul: este cuvântul dat în acea listă sau nu? Solutii posibile:
+\begin{itemize}
+    \item Hash-uri, $O(l)$ (unde l e lungimea cuvântului) pe query si $O(n \cdot l)$ memorie.
+\end{itemize}
+
+\textbf{Problema: }
+Am mai multe cuvinte și apoi am întrebări de genul:
+Este cuvântul în dicționar sau nu? Care este cel mai lung preﬁx al cuvântului în dicționar? Solutii posibile:
+
+\begin{itemize}
+    \item Nu mai merge cu hash-uri.
+    \item Sortăm toate cuvintele lexicograﬁc și apoi căutăm binar. \textbf{$O(n \cdot l)$ memorie și $O(log(n) \cdot l)$}
+    \item Ținem toate cuvintele într-un arbore binar de căutare echilibrat. \textbf{$O(n \cdot l)$ memorie și $O(log(n) \cdot l)$}
+\end{itemize}
+
+Implementare Trie:
+\begin{itemize}
+    \item Fiecare nod are un vector cu 26 de vecini, una pentru ﬁecare literă (sau mărimea alfabetului).
+    \item Ce facem dacă alfabetul e mare? Fiecare nod ține un hash-map care, pentru ﬁecare literă, ține pointer-ul către nodul cu acea literă.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\linewidth]{trie.png}
+    \caption{Trie cu cuvintele ana, animator, animație, animal, anima.}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection*{Inserare}
+Pornim din rădăcină și, la ﬁecare literă, mergem în nodul corespunzător literei. Eventual creăm acel nod. \textbf{Complexitate: $O(l)$}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{insert-trie.png}
+    \caption{Inserare in trie}
+    \label{fig:enter-label}
+\end{figure}
+
+\subsection*{Cautare}
+
+Cautarea unui cuvant din dictionar: 
+\begin{itemize}
+    \item Pornim din rădăcină și mergem, la ﬁecare pas, pe litera corespunzătoare.
+    \item Complexitate $O(l)$ pentru căutare reușită.
+    În practică, mai rapid pentru căutare nereușită.
+\end{itemize}
+
+Căutare preﬁx maxim: Căutăm elementul până nu găsim nod corespunzător acelei litere. \textbf{Complexitate $O(l)$.}
+
+\subsection*{Sortarea lexicografica in trie}
+Odată ce trie-ul este construit, sortarea în ordine lexicografică poate fi realizată printr-un traversare în preordine (preorder traversal). Într-un trie, o traversare în preordine va vizita nodurile în ordine lexicografică, deoarece:
+
+\begin{itemize}
+    \item Nodurile sunt vizitate de la rădăcină spre frunze.
+    \item La fiecare nivel, vizităm nodurile în ordinea alfabetică a literelor.
+\end{itemize}
+
 \end{document}
 
 
-\end{document}
+
+
