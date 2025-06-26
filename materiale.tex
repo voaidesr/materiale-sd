@@ -26,6 +26,7 @@
 \theoremstyle{remark}
 \newtheorem*{remark}{Remark}
 \newtheorem{exercise}{Exercise}[section]
+\newtheorem*{solution}{Solution}
 
 % Listings Configuration
 \lstset{
@@ -700,6 +701,113 @@ Pornind de la rădăcina arborelui, notăm prin \(m = \mathit{size}(x.\mathit{le
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%
+\section{B-Arbori (B-Trees)}
+
+Un \emph{B-arbore} de grad minim \(t\ge2\) este un arbore echilibrat în care fiecare nod intern poate avea între \(t\) și \(2t\) fii, și în care toate frunzele se află pe același nivel. Mai precis:
+
+\begin{definition}[B-arbore]
+  Fie \(t\ge2\). Un arbore \(T\) este numit \emph{B-arbore de grad minim \(t\)} dacă satisfice următoarele condiții:
+  \begin{enumerate}
+    \item Fiecare nod \(x\) are \(n(x)\) chei, cu \(t-1\le n(x)\le 2t-1\), cu excepția rădăcinii care poate avea \(1\le n(\mathrm{root})\le 2t-1\).
+    \item Dacă \(x\) nu este frunză, are \(n(x)+1\) pointeri către fiii săi.
+    \item Toate frunzele se găsesc la același nivel (înălțimea arborelui).
+    \item Cheile dintr-un nod \(x\) sunt stocate în ordine crescătoare:
+      \[
+        k_1(x)\le k_2(x)\le\cdots\le k_{n(x)}(x),
+      \]
+      iar domeniile subarborilor satisfac
+      \[
+        k_1(x)<\dotsb<k_{i}(x)< \text{chei din subarborele }i+1<k_{i+1}(x)<\dotsb.
+      \]
+  \end{enumerate}
+\end{definition}
+
+\subsection*{Înălțimea unui B-arbore}
+Un B-arbore de înălțime \(h\) și cu minim de chei în fiecare nod are cel puțin
+\[
+  1 + (t) + (t)^2 + \dots + (t)^{h} = \frac{t^{h+1}-1}{t-1}
+\]
+chei, deci \(h = O(\log_t n) = O(\log n)\).
+
+\subsection*{Operații de bază}
+
+\begin{description}
+  \item[Căutare\:]
+    Începem de la rădăcină și, pentru un nod \(x\), căutăm prin binsearch în cele \(n(x)\) chei poziția la care \(k\) s-ar insera sau s-ar găsi.
+    \(\;\Bigl.\)Dacă găsim, ne oprim; altfel continuăm recursiv în subarborele corespunzător.
+    \emph{Complexitate:} \(O(\log_t n)\cdot O(\log t)=O(\log n)\).
+  \item[Inserare\:]
+    1. Căutăm frunza \(L\) în care s-ar afla cheia \(k\).
+    2. Dacă \(L\) are strict mai puțin de \(2t-1\) chei, adăugăm \(k\) și terminăm.
+    3. Dacă \(L\) este \emph{plin} (\(2t-1\) chei), îl \emph{splitt-ăm} în două noduri cu câte \(t-1\) chei, promovăm cheia mediană în părinte și repetăm recursiv pentru cheia promovată.
+    \emph{Complexitate:} \(O(t\log_t n)=O(t\log n)\).
+  \item[Ștergere\:]
+    1. Dacă cheia \(k\) se află într-o frunză \(L\) și după ștergere rămâne cel puțin \(t-1\) chei, o eliminăm direct.
+    2. Dacă în urma ștergerii \(L\) rămâne cu \(<t-1\) chei, împrumutăm o cheie de la un frate cu \(t\) chei sau, dacă niciun frate nu poate împrumuta, \emph{fuzionăm} \(L\) cu un frate și o cheie părinte, apoi continuăm recursiv.
+    3. Dacă \(k\) e într-un nod intern \(x\), îl înlocuim cu predecesorul sau succesorul său (dintr-o frunză) și ștergem apoi recursiv din frunză.
+    \emph{Complexitate:} \(O(t\log_t n)=O(t\log n)\).
+\end{description}
+
+\subsection*{Exerciții rezolvate}
+
+\begin{exercise}
+Pentru ce valori ale lui \(t\) următorul nod poate apărea într-un B-arbore de grad minim \(t\)?
+\[
+\bigl[\,[3,5]\,\bigm|\,7\,\bigm|\,[10,12,14]\bigr]
+\]
+\end{exercise}
+\begin{solution}
+În nod avem \(n=3\) chei. Condiţiile pentru un nod nenul (ne-rădăcină) sunt
+\[
+t-1 \;\le\; n \;\le\; 2t-1
+\quad\Longrightarrow\quad
+t-1\le3\le2t-1.
+\]
+Din prima: \(t\le4\). Din a doua: \(2t-1\ge3\implies t\ge2\).
+\textbf{Răspuns:} orice \(t\in\{2,3,4\}\).
+\end{solution}
+
+\vspace{1em}
+
+\begin{exercise}
+Desenați toate B-arborii de grad minim \(t=2\) care conțin exact cheile \(\{1,2,3,4,5\}\).
+\end{exercise}
+\begin{solution}
+Pentru \(t=2\) fiecare nod nenul trebuie să aibă între \(1\) și \(3\) chei. Există două posibilităţi de structură:
+
+\medskip
+\noindent\textbf{(a) Rădăcină cu o singură cheie \([3]\) și doi copii cu câte două chei:}
+\begin{center}
+\begin{tikzpicture}[
+  level distance=1.2cm,
+  level 1/.style={sibling distance=2.5cm},
+  every node/.style={rectangle,draw,minimum width=1.2cm,minimum height=0.6cm,inner sep=2pt}
+]
+  \node {\([3]\)}
+    child { node {\([1,2]\)} }
+    child { node {\([4,5]\)} };
+\end{tikzpicture}
+\end{center}
+
+\medskip
+\noindent\textbf{(b) Rădăcină cu două chei \([2,4]\) și trei copii cu câte o cheie:}
+\begin{center}
+\begin{tikzpicture}[
+  level distance=1.2cm,
+  level 1/.style={sibling distance=2cm},
+  every node/.style={rectangle,draw,minimum width=1.2cm,minimum height=0.6cm,inner sep=2pt}
+]
+  \node {\([2,4]\)}
+    child { node {\([1]\)} }
+    child { node {\([3]\)} }
+    child { node {\([5]\)} };
+\end{tikzpicture}
+\end{center}
+
+Aceste două configuraţii sunt singurele care respectă condiţiile pentru \(n(x)\in[\,1,3\,]\) și acoperă exact cele 5 chei.
+\end{solution}
+
+
 
 \section{Arbori binari de cautare echilibrati}
 
